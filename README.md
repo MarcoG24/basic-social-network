@@ -1,4 +1,12 @@
 Error in planetscaled when "react-scripts" version > "4.0.3",
+
+# Posibles mejoras
+- deuda tecnica
+- front
+- conexion segura con apis
+- enviar json por api para no enviar toda la data en el url
+- mejorar naming en base de datos
+- codigo más limpio y tipado
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

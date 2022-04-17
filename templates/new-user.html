@@ -8,26 +8,34 @@
 	</head>
 	<body>
 		<div class="register">
-			<h1>Register</h1>
+			<h1>Usuarios</h1>
 			<div class="links">
-				<a href="{{ url_for('login') }}">Login</a>
-				<a class="active">Register</a>
+                <a href="{{ url_for('home') }}" class="fas fa-arrow-left"></a>
+                <a class="active">Registrar</a>
+				<a href="{{ url_for('update_user') }}">Actualizar</a>
+                <a href="{{ url_for('delete_user') }}">Eliminar</a>
+                
+				
 			</div>
-			<form action="{{ url_for('login') }}" method="post" autocomplete="off">
+			<form action="{{ url_for('register_user') }}" method="post" autocomplete="off">
 				<label for="username">
 					<i class="fas fa-user"></i>
 				</label>
-				<input type="text" name="username" placeholder="Username" id="username" required>
+				<input type="text" name="name" placeholder="Nombre" id="name" required>
+                <label for="email">
+					<i class="fas fa-envelope"></i>
+				</label>
+				<input type="email" name="email" placeholder="Correo" id="email" required>
+                <label for="type_user">
+					<i class="fas fa-user-circle"></i>
+				</label>
+				<input type="text" name="type_user" placeholder="Tipo de usuario" id="type_user" required>
 				<label for="password">
 					<i class="fas fa-lock"></i>
 				</label>
-				<input type="password" name="password" placeholder="Password" id="password" required>
-				<label for="email">
-					<i class="fas fa-envelope"></i>
-				</label>
-				<input type="email" name="email" placeholder="Email" id="email" required>
+				<input type="password" name="password" placeholder="Contraseña" id="password" required>
 				<div class="msg">{{ msg }}</div>
-				<input type="submit" value="Register">
+				<input type="submit" value="Registrar">
 			</form>
 		</div>
 	</body>

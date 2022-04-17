@@ -26,10 +26,10 @@
                   <ul class="icons">
                     <li><i class="fas fa-grip-lines-vertical"></i></li>
                     <li><a href="{{ url_for('add_user') }}" alt="Agregar usuario" class="fas fa-user-plus"></a></li>
-                    <li><a href="#" class="fas fa-user-edit"></a></li>
-                    <li><a href="#" class="fas fa-user-slash"></a></li>
+                    <li><a href="{{ url_for('update_user') }}" class="fas fa-user-edit"></a></li>
+                    <li><a href="{{ url_for('delete_user') }}" class="fas fa-user-slash"></a></li>
 										<li><i class="fas fa-grip-lines-vertical"></i></li>
-										<li><a href="#" class="fas fa-plus"></a></li>
+										<li><a href="{{ url_for('new_post') }}" class="fas fa-plus"></a></li>
 										<li><a href="#" class="fas fa-pen"></a></li>
 										<li><a href="#" class="fas fa-backspace"></a></li>
                     <li><i class="fas fa-grip-lines-vertical"></i></li>
