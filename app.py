@@ -24,13 +24,13 @@ def login():
         # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
-        url = f'http://127.0.0.1:4000/get-data?email={username}'
+        url = f'http://127.0.0.1:4000/get-user?email={username}&password={password}'
         res = requests.get(url)
         response = json.loads(res.text)
-        data_user = response[0]
+        msg=''
         if response:
             session['loggedin'] = True
-            session['data'] = data_user
+            session['data'] = response[0]
             # Redirect to home page
             return redirect(url_for('home'))
             
@@ -109,10 +109,9 @@ def find_user():
         and 'email' in request.form
         ):
         email = request.form['email']
-        url = f'http://127.0.0.1:4000/get-data?email={email}'
+        url = f'http://127.0.0.1:4000/find-user?email={email}'
         res = requests.get(url)
         response = json.loads(res.text)
-        print(response)
         data_user = response
         if response:
             data_user = response[0]
@@ -139,7 +138,6 @@ def find_post():
         url = f'http://127.0.0.1:4000/find-post?id={id_post}'
         res = requests.get(url)
         response = json.loads(res.text)
-        print(response)
         data_post = response
         if response:
             data_post = response[0]
@@ -190,13 +188,11 @@ def delete_data_user():
 @app.route('/get-post', methods=['GET', 'POST'])
 def get_post():
     url = f'http://127.0.0.1:4000/get-posts'
-    print('**********')
-    print(url)
     res = requests.get(url)
     response = json.loads(res.text)
     if response:
-        return response
-    return []
+        return {"data": response}
+    return {"data": ""}
 
 @app.route('/create-post', methods=['GET', 'POST'])
 def create_post():
@@ -211,7 +207,6 @@ def create_post():
 
 @app.route('/update-data-post', methods=['GET', 'POST'])
 def update_data_post():
-    print('aqui actualizamos los post de la base')
     if (request.method == 'POST'):
         data = request.form
         response = _pscale_connect_post(data, 'update-data-post')
@@ -224,12 +219,11 @@ def update_data_post():
                 'msg_find': ''
         }
         if int(response) > 0:
-            data_post['msg'] = '✅ El usuario se actualizó con éxito!. ✅'
+            data_post['msg'] = '✅ La publicación se actualizó con éxito!. ✅'
         return render_template('update-post.html', post=data_post)
 
 @app.route('/delete-data-post', methods=['GET', 'POST'])
 def delete_data_post():
-    print('aqui borramos los post de la base')
     if (request.method == 'POST'):
         data = request.form
         response = _pscale_connect_post(data, 'delete-data-post')
@@ -240,6 +234,21 @@ def delete_data_post():
         if int(response) > 0:
             data_post['msg_delete'] = '✅ El post se elimino con éxito!. ✅'
         return render_template('delete-post.html', post=data_post)
+
+@app.route('/update-hits', methods=['GET', 'POST'])
+def update_hits():
+    if (request.method == 'POST'):
+        data = request.form
+        response = _pscale_connect_post(data, 'update-data-post')
+        data_post = {
+                'id': data['id'],
+                'hits': data['hits'],
+                'msg': '⛔ Hubo un error, intente de nuevo. ⛔',
+                'msg_find': ''
+        }
+        if int(response) > 0:
+            data_post['msg'] = '✅ El usuario se actualizó con éxito!. ✅'
+        return render_template('index.html', user=session['data'])
 
 def _pscale_connect_users(data, api_name):
     if ('name' in data
@@ -253,8 +262,6 @@ def _pscale_connect_users(data, api_name):
         for element in data:
             data_to_send = f'{data_to_send}{element}={data[element]}&'
         url = f'http://127.0.0.1:4000/{api_name}{data_to_send[:-1]}'
-        print('**********')
-        print(url)
         res = requests.get(url)
         response = json.loads(res.text)
         return response
@@ -264,14 +271,13 @@ def _pscale_connect_post(data, api_name):
         and 'subtitle' in data
         and 'note' in data
         or api_name == 'delete-data-post'
+        or 'id' in data
     ):
         # Create variables for easy access
         data_to_send = '?'
         for element in data:
             data_to_send = f'{data_to_send}{element}={data[element]}&'
         url = f'http://127.0.0.1:4000/{api_name}{data_to_send[:-1]}'
-        print('**********')
-        print(url)
         res = requests.get(url)
         response = json.loads(res.text)
         return response

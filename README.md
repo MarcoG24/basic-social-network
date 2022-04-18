@@ -9,73 +9,73 @@ Error in planetscaled when "react-scripts" version > "4.0.3",
 - codigo más limpio y tipado
 - manejar un solo estilo para los formularios
 - tener carga de imagenes en formularios al crear publicaciones
-# Getting Started with Create React App
+- hacer logout
+- normalizar comillas simples o dobles
+- ordenar post del más nuevo al más viejo
+- cuando den like, mostrar animación 
+- mostrar cuantos hits (+1) tiene cada publicación
+- mejorar front y mostrar quien hizo la publicación
+# Basic Social Network
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is divided into 2 subprojects:
 
-## Available Scripts
+## APIs
 
-In the project directory, you can run:
+Contains the following technologies:
+* dotoenv
+* mysql2
+* express
 
-### `npm start`
+## System
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Contains the following technologies
+* flask (python)
+* javascript
+* ajax
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## PlanetScale used as database
 
-### `npm test`
+* create table "users":
+```
+CREATE TABLE `users` (
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `type_user` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* create table "user_post":
+```
+CREATE TABLE `user_post` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title_post` varchar(250) DEFAULT NULL,
+  `subtitle` varchar(250) DEFAULT NULL,
+  `note` varchar(500) DEFAULT NULL,
+  `user` varchar(250) DEFAULT NULL,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
 
-### `npm run build`
+# To run the project you need to have python 3 installed and:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Download repository
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Install libraries
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- python
+`pip install flask`
 
-### `npm run eject`
+- install nodejs and
+`npm i package.json`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* Create .env file inside the "api-connection" folder and add planetScale database credentials
+from a new console `cd [folder-name]/api-connection`
+`node conn.js`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* run system
+`cd [folder-name]`
+` flask run `
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
