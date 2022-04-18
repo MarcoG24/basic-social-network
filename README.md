@@ -1,20 +1,3 @@
-Error in planetscaled when "react-scripts" version > "4.0.3",
-
-# Posibles mejoras
-- deuda tecnica
-- front
-- conexion segura con apis
-- enviar json por api para no enviar toda la data en el url
-- mejorar naming en base de datos
-- codigo más limpio y tipado
-- manejar un solo estilo para los formularios
-- tener carga de imagenes en formularios al crear publicaciones
-- hacer logout
-- normalizar comillas simples o dobles
-- ordenar post del más nuevo al más viejo
-- cuando den like, mostrar animación 
-- mostrar cuantos hits (+1) tiene cada publicación
-- mejorar front y mostrar quien hizo la publicación
 # Basic Social Network
 
 This project is divided into 2 subprojects:
