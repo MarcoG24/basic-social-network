@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Website raiting form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="main-block">
+      <h1><a href="{{ url_for('home') }}">⬅️ </a> Actualizar una nota</h1>
+      <form action="{{ url_for('find_post') }}" method="post">
+        <div class="info">
+            <div class="info-item">
+              <label class="icon" for="name"><i class="fas fa-search"></i></label>
+              <input type="text" id="id" name="id" placeholder="Id Publicacion" required/>
+            </div>
+        </div>
+        <h5>{{ post.msg_find }}</h5>
+        <button type="submit">Publicar</button>
+      </form>
+      <form action="{{ url_for('update_data_post') }}" method="post" id="confirmationForm" name="confirmationForm">
+        <div class="info">
+            <div class="info-item" hidden>
+                <label class="icon" for="name"><i class="fas fa-search"></i></label>
+                <input type="text" id="id" name="id" placeholder="Id Publicacion" value="{{ post.id }}" readonly/>
+            </div>
+          <div class="info-item">
+            <label class="icon" for="name"><i class="fas fa-heading"></i></label>
+            <input type="text" id="title_post" name="title_post" placeholder="Titulo" value="{{ post.title_post }}" required/>
+          </div>
+          <div  class="info-item">
+            <label class="icon" for="age"><i class="fas fa-i-cursor"></i></i></label>
+            <input type="text" id="subtitle" name="subtitle"  placeholder="Subtitulo" value="{{ post.subtitle }}" required/>
+          </div>
+        </div>
+        
+        <h3>Redacta aquí tu nota.</h3>
+        <textarea id="note" name="note" rows="5" form="confirmationForm">{{ post.note }}</textarea>
+        <h4>{{ post.msg }}</h4>
+        <button type="submit">Publicar</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -81,6 +81,13 @@ def new_post():
     else:
         return render_template('login.html', msg='🛑 No olvides iniciar sesión ⛔')
 
+@app.route('/update-post', methods=['GET', 'POST'])
+def update_post():
+    if session['loggedin']:
+        return render_template('update-post.html', post='')
+    else:
+        return render_template('login.html', msg='🛑 No olvides iniciar sesión ⛔')
+
 @app.route('/register-user', methods=['GET', 'POST'])
 def register_user():
     if (request.method == 'POST'):
@@ -115,6 +122,33 @@ def find_user():
                 'msg_find': '⛔  Usuario no encontrado ⛔ '
             }
             return render_template('update-user.html', user=data_user)
+
+@app.route('/find-post', methods=['GET', 'POST'])
+def find_post():
+    if (request.method == 'POST'
+        and 'id' in request.form
+        ):
+        id_post = request.form['id']
+        url = f'http://127.0.0.1:4000/find-post?id={id_post}'
+        res = requests.get(url)
+        response = json.loads(res.text)
+        print(response)
+        data_post = response
+        if response:
+            data_post = response[0]
+            data_post['msg'] = ''
+            data_post['msg_find'] = '✅  Publicacion encontrada con éxito ✅ '
+            return render_template('update-post.html', post=data_post)
+        else:
+            data_post = {
+                'title_post': '',
+                'subtitle':'',
+                'note':'',
+                'user': '',
+                'msg': '',
+                'msg_find': '⛔  Usuario no encontrado ⛔ '
+            }
+            return render_template('update-post.html', post=data_post)
 
 @app.route('/update-data-user', methods=['GET', 'POST'])
 def update_data_user():
@@ -168,23 +202,23 @@ def create_post():
         return render_template('new-post.html', msg='⛔ Hubo un error, intente de nuevo. ⛔')
         
 
-@app.route('/update-post', methods=['GET', 'POST'])
+@app.route('/update-data-post', methods=['GET', 'POST'])
 def update_data_post():
     print('aqui actualizamos los post de la base')
     if (request.method == 'POST'):
         data = request.form
         response = _pscale_connect_post(data, 'update-data-post')
-        data_user = {
-                'title': data['title'],
+        data_post = {
+                'title_post': data['title_post'],
                 'subtitle': data['subtitle'],
                 'note': data['note'],
-                'user': session['data']['email'],
+                'user': session['data']['name'],
                 'msg': '⛔ Hubo un error, intente de nuevo. ⛔',
                 'msg_find': ''
         }
         if int(response) > 0:
-            data_user['msg'] = '✅ El usuario se actualizó con éxito!. ✅'
-        return render_template('update-post.html', user=data_user)
+            data_post['msg'] = '✅ El usuario se actualizó con éxito!. ✅'
+        return render_template('update-post.html', post=data_post)
 
 @app.route('/delete-post', methods=['GET', 'POST'])
 def delete_data_post():
@@ -193,7 +227,7 @@ def delete_data_post():
         data = request.form
         response = _pscale_connect_post(data, 'delete-data-post')
         data_user = {
-                'title': data['title'],
+                'title_post': data['title_post'],
                 'subtitle': data['subtitle'],
                 'note': data['note'],
                 'user': session['data']['email'],
@@ -202,7 +236,7 @@ def delete_data_post():
         }
         if int(response) > 0:
             data_user['msg'] = '✅ El usuario se actualizó con éxito!. ✅'
-        return render_template('update-post.html', user=data_user)
+        return render_template('delete-post.html', user=data_user)
 
 def _pscale_connect_users(data, api_name):
     if ('name' in data
@@ -223,7 +257,7 @@ def _pscale_connect_users(data, api_name):
         return response
 
 def _pscale_connect_post(data, api_name):
-    if ('title' in data
+    if ('title_post' in data
         and 'subtitle' in data
         and 'note' in data
     ):

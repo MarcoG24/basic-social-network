@@ -135,6 +135,31 @@ app.get('/get-posts', (req, res) => {
 
 })
 
+app.get('/find-post', (req, res) => {
+  console.log('************')
+  console.log(req.query)
+  console.log('************')
+  // const dataMock = [
+  //   {
+  //     email: 'prueba',
+  //     password: 'prueba',
+  //     type_user: 'admin',
+  //     name: 'prueba'
+  //   }
+  // ]
+  // console.log(dataMock)
+  // console.log('************')
+  // res.send(dataMock)
+
+  const query = 'SELECT * FROM user_post WHERE id= "' + req.query.id + '"'
+  connection.query(query, function (err, rows, fields) {
+    if (err) res.send([])
+
+    res.send(rows)
+    console.log(rows)
+  })
+})
+
 app.get('/create-post', (req, res) => {
   console.log('************')
   console.log(req.query)
@@ -166,30 +191,30 @@ app.get('/update-data-post', (req, res) => {
   console.log('************')
   console.log(req.query)
   console.log('************')
-  const dataMock = '1'
-  console.log(dataMock)
-  console.log('************')
-  res.send(dataMock)
+  // const dataMock = '1'
+  // console.log(dataMock)
+  // console.log('************')
+  // res.send(dataMock)
 
-  // let create_query = ''
-  // let data_where = ''
-  // Object.entries(req.query).forEach(entry => {
-  //   const [key, value] = entry;
-  //   const column = key + '= "' + value + '",'
-  //   if (key === 'email') {
-  //     data_where = column.substring(0, column.length - 1)
-  //   } else {
-  //     create_query = create_query + column
-  //   }
-  // });
-  // const data_query = create_query.substring(0, create_query.length - 1) 
+  let create_query = ''
+  let data_where = ''
+  Object.entries(req.query).forEach(entry => {
+    const [key, value] = entry;
+    const column = key + '= "' + value + '",'
+    if (key === 'id') {
+      data_where = column.substring(0, column.length - 1)
+    } else {
+      create_query = create_query + column
+    }
+  });
+  const data_query = create_query.substring(0, create_query.length - 1) 
   
-  // const query = 'UPDATE user_post SET ' + data_query + ' WHERE ' + data_where
-  // console.log(query)
-  // connection.query(query, function (err, rows, fields) {
-  //   if (err) res.status(400).send('0')
-  //   res.status(200).send(rows.affectedRows.toString())
-  // })
+  const query = 'UPDATE user_post SET ' + data_query + ' WHERE ' + data_where
+  console.log(query)
+  connection.query(query, function (err, rows, fields) {
+    if (err) res.status(400).send('0')
+    res.status(200).send(rows.affectedRows.toString())
+  })
 
 })
 

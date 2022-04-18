@@ -7,6 +7,8 @@ Error in planetscaled when "react-scripts" version > "4.0.3",
 - enviar json por api para no enviar toda la data en el url
 - mejorar naming en base de datos
 - codigo más limpio y tipado
+- manejar un solo estilo para los formularios
+- tener carga de imagenes en formularios al crear publicaciones
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

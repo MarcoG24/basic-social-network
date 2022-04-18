@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Publicar</title>
+    <title>Website raiting form</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
   </head>
   <body>
-    <div class="testbox">
+    <div class="main-block">
+      <h1><a href="{{ url_for('home') }}">⬅️ </a> Publicar una nota</h1>
       <form action="{{ url_for('create_post') }}" method="post" id="confirmationForm" name="confirmationForm">
-        <h1>Publicar una nota</h1>
-        <h4>Titulo<span>*</span></h4>
-        <input type="text" id="title" name="title" required />
-        <h4>Subtitulo<span>*</span></h4>
-        <input type="text" id="subtitle" name="subtitle" required />
-        <h4>Nota<span>*</span></h4>
-        <p class="small">Redacta aquí tu nota.</small>
-          <textarea id="note" name="note" rows="5" form="confirmationForm"></textarea>
-        <h5>{{ msg }}</h5>
-        <div class="btn-block">
-          <button type="submit">Publicar</button>
+        <div class="info">
+          <div class="info-item">
+            <label class="icon" for="name"><i class="fas fa-heading"></i></label>
+            <input type="text" id="title" name="title" placeholder="Titulo" required/>
+          </div>
+          <div  class="info-item">
+            <label class="icon" for="age"><i class="fas fa-i-cursor"></i></i></label>
+            <input type="text" id="subtitle" name="subtitle"  placeholder="Subtitulo" required/>
+          </div>
         </div>
+        
+        <h3>Redacta aquí tu nota.</h3>
+        <textarea id="note" name="note" rows="5" form="confirmationForm"></textarea>
+        <h4>{{ msg }}</h4>
+        <button type="submit">Publicar</button>
       </form>
     </div>
   </body>
