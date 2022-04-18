@@ -221,20 +221,20 @@ app.get('/update-data-post', (req, res) => {
 app.get('/delete-data-post', (req, res) => {
   console.log('************')
   console.log(req.query)
-  console.log('************')
-  const dataMock = '1'
-  console.log(dataMock)
-  console.log('************')
-  res.send(dataMock)
+  // console.log('************')
+  // const dataMock = '1'
+  // console.log(dataMock)
+  // console.log('************')
+  // res.send(dataMock)
 
-  // let data_where =  'email = "' + req.query['email'] + '"'
+  let data_where =  'id = "' + req.query['id'] + '"'
   
-  // const query = 'DELETE FROM user_post WHERE ' + data_where
-  // console.log(query)
-  // connection.query(query, function (err, rows, fields) {
-  //   if (err) res.status(400).send('0')
-  //   res.status(200).send(rows.affectedRows.toString())
-  // })
+  const query = 'DELETE FROM user_post WHERE ' + data_where
+  console.log(query)
+  connection.query(query, function (err, rows, fields) {
+    if (err) res.status(400).send('0')
+    res.status(200).send(rows.affectedRows.toString())
+  })
 
 })
 

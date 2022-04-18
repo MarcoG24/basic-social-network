@@ -88,6 +88,13 @@ def update_post():
     else:
         return render_template('login.html', msg='🛑 No olvides iniciar sesión ⛔')
 
+@app.route('/delete-post', methods=['GET', 'POST'])
+def delete_post():
+    if session['loggedin']:
+        return render_template('delete-post.html', post='')
+    else:
+        return render_template('login.html', msg='🛑 No olvides iniciar sesión ⛔')
+
 @app.route('/register-user', methods=['GET', 'POST'])
 def register_user():
     if (request.method == 'POST'):
@@ -220,23 +227,19 @@ def update_data_post():
             data_post['msg'] = '✅ El usuario se actualizó con éxito!. ✅'
         return render_template('update-post.html', post=data_post)
 
-@app.route('/delete-post', methods=['GET', 'POST'])
+@app.route('/delete-data-post', methods=['GET', 'POST'])
 def delete_data_post():
     print('aqui borramos los post de la base')
     if (request.method == 'POST'):
         data = request.form
         response = _pscale_connect_post(data, 'delete-data-post')
-        data_user = {
-                'title_post': data['title_post'],
-                'subtitle': data['subtitle'],
-                'note': data['note'],
-                'user': session['data']['email'],
-                'msg': '⛔ Hubo un error, intente de nuevo. ⛔',
-                'msg_find': ''
+        data_post = {
+                'id': data['id'],
+                'msg_delete': '⛔ Hubo un error, intente de nuevo. ⛔'
         }
         if int(response) > 0:
-            data_user['msg'] = '✅ El usuario se actualizó con éxito!. ✅'
-        return render_template('delete-post.html', user=data_user)
+            data_post['msg_delete'] = '✅ El post se elimino con éxito!. ✅'
+        return render_template('delete-post.html', post=data_post)
 
 def _pscale_connect_users(data, api_name):
     if ('name' in data
@@ -260,6 +263,7 @@ def _pscale_connect_post(data, api_name):
     if ('title_post' in data
         and 'subtitle' in data
         and 'note' in data
+        or api_name == 'delete-data-post'
     ):
         # Create variables for easy access
         data_to_send = '?'
